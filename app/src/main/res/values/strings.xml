@@ -6,4 +6,8 @@
     <string name="panggilan">Panggilan</string>
     <string name="pembaruan">Pembaruan</string>
     <string name="diarsipkan">Diarsipkan</string>
+    <string name="Login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="have_no_account">Have no account? Register Here</string>
 </resources>

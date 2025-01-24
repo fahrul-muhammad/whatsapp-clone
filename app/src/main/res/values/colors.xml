@@ -10,4 +10,5 @@
     <color name="green">#27bc61</color>
     <color name="green_chat">#134d37</color>
     <color name="grey_chat">#222627</color>
+    <color name="green_icon">#d5face</color>
 </resources>
