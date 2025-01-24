@@ -8,5 +8,7 @@
     <color name="black">#0a0a0a</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#27bc61</color>
+    <color name="green_chat">#134d37</color>
+    <color name="grey_chat">#222627</color>
 
 </resources>
