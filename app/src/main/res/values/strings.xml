@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WhatsappClone</string>
+    <string name="chat">Chat</string>
+    <string name="tanya_atau_cari">Tanya Meta AI atau Cari</string>
+    <string name="pengaturan">Pengaturan</string>
+    <string name="panggilan">Panggilan</string>
+    <string name="pembaruan">Pembaruan</string>
+    <string name="diarsipkan">Diarsipkan</string>
+</resources>
