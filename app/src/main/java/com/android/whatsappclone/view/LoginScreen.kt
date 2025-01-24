@@ -13,15 +13,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -29,23 +38,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.android.whatsappclone.R
+import com.android.whatsappclone.viewmodel.AuthViewModel
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
     LoginScreenContent(
-        navController = navController
+        navController = navController,
+        isLoading = viewModel.isLoading.value,
+        setUserName = viewModel::setUsername,
+        setPassword = viewModel::setPassword,
+        onLogin = viewModel::onLogin,
+        username = viewModel.username.value,
+        password = viewModel.password.value,
     )
 }
 
 
 @Composable
-fun LoginScreenContent(modifier: Modifier = Modifier, navController: NavController, isLoading:Boolean = false) {
+fun LoginScreenContent(modifier: Modifier = Modifier, navController: NavController, isLoading:Boolean = false, setUserName:(String) -> Unit, setPassword:(String) -> Unit, onLogin:() -> Unit, username:String, password:String) {
+    var isPasswordVisible by remember { mutableStateOf(false) }
+
     Column(
        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -99,8 +119,8 @@ fun LoginScreenContent(modifier: Modifier = Modifier, navController: NavControll
                 .height(10.dp)
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = username,
+                onValueChange = { setUserName(it)},
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp)
@@ -121,8 +141,8 @@ fun LoginScreenContent(modifier: Modifier = Modifier, navController: NavControll
                 .height(10.dp)
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = password,
+                onValueChange = {setPassword(it)},
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp)
@@ -136,13 +156,23 @@ fun LoginScreenContent(modifier: Modifier = Modifier, navController: NavControll
                 )
                 ,
                 label = { Text(text = stringResource(R.string.password)) },
-                keyboardActions = KeyboardActions.Default
+                keyboardActions = KeyboardActions.Default,
+                visualTransformation = if (!isPasswordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+                trailingIcon = {
+                    IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                        Icon(
+                            imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                            contentDescription = if (isPasswordVisible) "Hide password" else "Show password",
+                            tint = colorResource(id = R.color.green)
+                        )
+                    }
+                },
             )
             Spacer(modifier = modifier
                 .height(20.dp)
             )
             Button(
-                onClick = {},
+                onClick = { onLogin() },
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp)
@@ -157,8 +187,7 @@ fun LoginScreenContent(modifier: Modifier = Modifier, navController: NavControll
                 ),
             ) {
                 if(!isLoading) {
-
-                Text(text = stringResource(R.string.Login))
+                    Text(text = stringResource(R.string.Login))
                 } else {
                     CircularProgressIndicator(
                         color = Color.White,
@@ -192,5 +221,5 @@ fun LoginScreenContent(modifier: Modifier = Modifier, navController: NavControll
 @Composable
 private fun LoginScreenContentPreview() {
     val navController = rememberNavController()
-    LoginScreenContent(navController = navController)
+    LoginScreenContent(navController = navController, isLoading = false, setUserName = {}, setPassword = {}, onLogin = {}, username = "", password = "")
 }

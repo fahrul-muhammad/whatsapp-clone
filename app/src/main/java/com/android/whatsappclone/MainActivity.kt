@@ -4,11 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.android.whatsappclone.model.RouterScreen
+import com.android.whatsappclone.view.ChatScreen
 import com.android.whatsappclone.view.LoginScreen
+import com.android.whatsappclone.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,10 +23,14 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             NavHost(
                 navController = navController,
-                startDestination = RouterScreen.LOGIN_SCREEN
+                startDestination = RouterScreen.MAIN_SCREEN
             ){
                 composable(RouterScreen.LOGIN_SCREEN){
-                    LoginScreen(navController = navController)
+                    val viewModel = hiltViewModel<AuthViewModel>()
+                    LoginScreen(navController = navController, viewModel = viewModel)
+                }
+                composable(RouterScreen.MAIN_SCREEN){
+                    MainScreen()
                 }
             }
         }
