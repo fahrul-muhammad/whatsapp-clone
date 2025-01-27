@@ -10,4 +10,6 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="have_no_account">Have no account? Register Here</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="arsip">Diarsipkan</string>
 </resources>

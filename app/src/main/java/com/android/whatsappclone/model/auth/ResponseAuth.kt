@@ -1,4 +1,4 @@
-package com.android.whatsappclone.model.Auth
+package com.android.whatsappclone.model.auth
 
 data class LoginResponse(
     val token:String

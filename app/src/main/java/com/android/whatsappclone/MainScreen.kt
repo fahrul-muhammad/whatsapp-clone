@@ -31,12 +31,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.whatsappclone.model.NavItem
 import com.android.whatsappclone.view.CallScreen
 import com.android.whatsappclone.view.ChatScreen
 import com.android.whatsappclone.view.CommunityScreen
 import com.android.whatsappclone.view.SettingScreen
 import com.android.whatsappclone.view.UpdateScreen
+import com.android.whatsappclone.viewmodel.ChatViewModel
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {

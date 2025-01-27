@@ -9,7 +9,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.android.whatsappclone.model.RouterScreen
-import com.android.whatsappclone.view.ChatScreen
 import com.android.whatsappclone.view.LoginScreen
 import com.android.whatsappclone.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +22,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             NavHost(
                 navController = navController,
-                startDestination = RouterScreen.MAIN_SCREEN
+                startDestination = RouterScreen.LOGIN_SCREEN
             ){
                 composable(RouterScreen.LOGIN_SCREEN){
                     val viewModel = hiltViewModel<AuthViewModel>()

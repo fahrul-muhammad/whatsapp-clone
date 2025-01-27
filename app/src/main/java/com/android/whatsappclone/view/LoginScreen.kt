@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.android.whatsappclone.R
+import com.android.whatsappclone.model.RouterScreen
 import com.android.whatsappclone.viewmodel.AuthViewModel
 
 @Composable
@@ -63,7 +64,16 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
 
 
 @Composable
-fun LoginScreenContent(modifier: Modifier = Modifier, navController: NavController, isLoading:Boolean = false, setUserName:(String) -> Unit, setPassword:(String) -> Unit, onLogin:() -> Unit, username:String, password:String) {
+fun LoginScreenContent(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    isLoading:Boolean = false,
+    setUserName:(String) -> Unit,
+    setPassword:(String) -> Unit,
+    onLogin:(onSuccessLogin: () -> Unit) -> Unit,
+    username:String,
+    password:String
+) {
     var isPasswordVisible by remember { mutableStateOf(false) }
 
     Column(
@@ -172,7 +182,9 @@ fun LoginScreenContent(modifier: Modifier = Modifier, navController: NavControll
                 .height(20.dp)
             )
             Button(
-                onClick = { onLogin() },
+                onClick = { onLogin {
+                    navController.navigate(RouterScreen.MAIN_SCREEN)
+                }},
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp)

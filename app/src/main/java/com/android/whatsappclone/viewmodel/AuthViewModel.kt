@@ -8,9 +8,9 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.whatsappclone.model.Auth.AuthPreferencesKeys
-import com.android.whatsappclone.model.Auth.LoginBody
-import com.android.whatsappclone.model.Auth.LoginResponse
+import com.android.whatsappclone.model.auth.AuthPreferencesKeys
+import com.android.whatsappclone.model.auth.LoginBody
+import com.android.whatsappclone.model.auth.LoginResponse
 import com.android.whatsappclone.model.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -22,7 +22,7 @@ import javax.inject.Inject
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth_preferences")
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(
+open class AuthViewModel @Inject constructor(
     private val mainRepository: MainRepository,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
@@ -92,7 +92,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun onLogin() {
+    fun onLogin(onSuccessLogin: () -> Unit) {
         viewModelScope.launch {
             try {
                 setIsLoading()
@@ -107,6 +107,7 @@ class AuthViewModel @Inject constructor(
                     val loginResponse = LoginResponse(response.body()?.token ?: "")
                     setToken(loginResponse.token)
                     saveToken(loginResponse.token)
+                    onSuccessLogin()
                 }
             } catch (e: Exception) {
                 println("LOGIN ERROR: " + e.message)
